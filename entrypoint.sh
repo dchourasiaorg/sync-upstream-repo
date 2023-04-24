@@ -10,6 +10,7 @@ FETCH_ARGS=$5
 MERGE_ARGS=$6
 PUSH_ARGS=$7
 SPAWN_LOGS=$8
+DOWNSTREAM_REPO=$9
 
 if [[ -z "$UPSTREAM_REPO" ]]; then
   echo "Missing \$UPSTREAM_REPO"
@@ -28,14 +29,20 @@ fi
 
 echo "UPSTREAM_REPO=$UPSTREAM_REPO"
 
-git clone "https://github.com/${GITHUB_REPOSITORY}.git" work
+if [[ $DOWNSTREAM_REPO == "GITHUB_REPOSITORY" ]]
+then
+  git clone "https://github.com/${GITHUB_REPOSITORY}.git" work
+  git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+else
+  git clone $DOWNSTREAM_REPO work
+  git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${DOWNSTREAM_REPO/https:\/\/github.com\//}"
+fi
+
 cd work || { echo "Missing work dir" && exit 2 ; }
 
 git config user.name "${GITHUB_ACTOR}"
 git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
 git config --local user.password ${GITHUB_TOKEN}
-
-git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
 
 git remote add upstream "$UPSTREAM_REPO"
 git fetch ${FETCH_ARGS} upstream

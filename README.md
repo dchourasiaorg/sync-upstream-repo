@@ -2,7 +2,7 @@
 
 This is a Github Action used to merge changes from remote.  
 
-This is forked from [mheene](https://github.com/mheene/sync-upstream-repo), with me adding authentication using [GitHub Token](https://docs.github.com/en/actions/reference/authentication-in-a-workflow) and downstream branch options due to the [default branch naming changes](https://github.com/github/renaming).
+This is forked from [dabreadman](https://github.com/dabreadman/sync-upstream-repo), with me adding optional parameter of downstream repo URL. Now this action can run from a third repo and sync upstream repo to provided downstream repos
 
 ## Use case
 
@@ -18,12 +18,14 @@ name: Sync Upstream
 
 env:
   # Required, URL to upstream (fork base)
-  UPSTREAM_URL: "https://github.com/dabreadman/go-web-proxy.git"
+  UPSTREAM_REPO: "https://github.com/dabreadman/go-web-proxy.git"
   # Required, token to authenticate bot, could use ${{ secrets.GITHUB_TOKEN }} 
   # Over here, we use a PAT instead to authenticate workflow file changes.
   WORKFLOW_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
   # Optional, defaults to main
   UPSTREAM_BRANCH: "main"
+  # Optional, defaults to current repo
+  DOWNSTREAM_REPO: "https://github.com/dchourasia/sync-upstream-repo"
   # Optional, defaults to UPSTREAM_BRANCH
   DOWNSTREAM_BRANCH: ""
   # Optional fetch arguments

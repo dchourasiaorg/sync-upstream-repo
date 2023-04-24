@@ -1,15 +1,19 @@
 name: Sync and merge upstream repository with your current repository
-description: Syncs and merges your current repository with the upstream repository. Fork of https://github.com/mheene/sync-upstream-repo.
-author: Dabreadman
+description: Syncs and merges your current repository with the upstream repository. Fork of https://github.com/dabreadman/sync-upstream-repo.
+author: dchourasia
 
 inputs:
   upstream_repo:
-    description: URL of gitHub public upstream repo
+    description: URL of upstream gitHub repo
     required: true
   upstream_branch:
     description: Branch to merge from upstream (defaults to downstream branch)
     required: false
     default: "main"
+  downstream_repo:
+    description: URL of downstream gitHub  repo
+    required: false
+    default: "GITHUB_REPOSITORY"
   downstream_branch:
     description: Branch to merge into downstream
     required: false
@@ -46,6 +50,7 @@ runs:
     - ${{ inputs.merge_args }}
     - ${{ inputs.push_args }}
     - ${{ inputs.spawn_logs }}
+    - ${{ inputs.downstream_repo }}
 
 branding:
   icon: "git-merge"
