@@ -18,14 +18,14 @@ name: Sync Upstream
 
 env:
   # Required, URL to upstream (fork base)
-  UPSTREAM_REPO: "https://github.com/dabreadman/go-web-proxy.git"
+  UPSTREAM_URL: "https://github.com/dabreadman/go-web-proxy.git"
   # Required, token to authenticate bot, could use ${{ secrets.GITHUB_TOKEN }} 
   # Over here, we use a PAT instead to authenticate workflow file changes.
   WORKFLOW_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
   # Optional, defaults to main
   UPSTREAM_BRANCH: "main"
   # Optional, defaults to current repo
-  DOWNSTREAM_REPO: "https://github.com/dchourasia/sync-upstream-repo"
+  DOWNSTREAM_URL: "https://github.com/dchourasia/sync-upstream-repo"
   # Optional, defaults to UPSTREAM_BRANCH
   DOWNSTREAM_BRANCH: ""
   # Optional fetch arguments
@@ -53,6 +53,7 @@ jobs:
         with: 
           upstream_repo: ${{ env.UPSTREAM_URL }}
           upstream_branch: ${{ env.UPSTREAM_BRANCH }}
+          downstream_repo: ${{ env.DOWNSTREAM_URL }}
           downstream_branch: ${{ env.DOWNSTREAM_BRANCH }}
           token: ${{ env.WORKFLOW_TOKEN }}
           fetch_args: ${{ env.FETCH_ARGS }}
