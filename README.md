@@ -2,7 +2,7 @@
 
 This is a Github Action used to merge changes from remote.  
 
-This is forked from [dabreadman](https://github.com/dabreadman/sync-upstream-repo), with me adding optional parameter of downstream repo URL. Now this action can run from a third repo and sync upstream repo to provided downstream repos
+This is forked from [dabreadman](https://github.com/dabreadman/sync-upstream-repo), with me adding optional parameter of downstream repo URL. Now this action can run from a third repo and sync upstream repo to provided downstream repo.
 
 ## Use case
 
