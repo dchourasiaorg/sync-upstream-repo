@@ -1,5 +1,5 @@
 name: Sync and merge from upstream repo to downstream repo
-description: Syncs and merges provided downstream repository with the upstream repository. Fork of https://github.com/dabreadman/sync-upstream-repo.
+description: Syncs and merges provided downstream repo with the upstream repos. Fork of https://github.com/dabreadman/sync-upstream-repo.
 author: dchourasia
 
 inputs:
