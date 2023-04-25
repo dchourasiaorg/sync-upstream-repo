@@ -1,5 +1,5 @@
-name: Sync and merge upstream repository with your current repository
-description: Syncs and merges your current repository with the upstream repository. Fork of https://github.com/dabreadman/sync-upstream-repo.
+name: Sync and merge from upstream repo to downstream repo
+description: Syncs and merges provided downstream repository with the upstream repository. Fork of https://github.com/dabreadman/sync-upstream-repo.
 author: dchourasia
 
 inputs:
