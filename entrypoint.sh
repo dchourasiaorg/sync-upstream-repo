@@ -66,7 +66,7 @@ git push origin
 MERGE_RESULT=$(git merge ${MERGE_ARGS} upstream/${UPSTREAM_BRANCH})
 
 
-if [[ $MERGE_RESULT == "" ]] 
+if [[ $MERGE_RESULT == "" ]] || [[ $MERGE_RESULT == *"merge failed"* ]]
 then
   exit 1
 elif [[ $MERGE_RESULT != *"Already up to date."* ]]
