@@ -12,6 +12,8 @@ PUSH_ARGS=$7
 SPAWN_LOGS=$8
 DOWNSTREAM_REPO=$9
 
+target_remote=origin
+
 if [[ -z "$UPSTREAM_REPO" ]]; then
   echo "Missing \$UPSTREAM_REPO"
   exit 1
@@ -20,34 +22,29 @@ fi
 if [[ -z "$DOWNSTREAM_BRANCH" ]]; then
   echo "Missing \$DOWNSTREAM_BRANCH"
   echo "Default to ${UPSTREAM_BRANCH}"
-  DOWNSTREAM_BREANCH=UPSTREAM_BRANCH
-fi
-
-if ! echo "$UPSTREAM_REPO" | grep '\.git'; then
-  UPSTREAM_REPO="https://github.com/${UPSTREAM_REPO_PATH}.git"
+  DOWNSTREAM_BRANCH=$UPSTREAM_BRANCH
 fi
 
 echo "UPSTREAM_REPO=$UPSTREAM_REPO"
-
 if [[ $DOWNSTREAM_REPO == "GITHUB_REPOSITORY" ]]
 then
-  git clone "https://github.com/${GITHUB_REPOSITORY}.git" work
+  git clone $UPSTREAM_REPO work
   cd work || { echo "Missing work dir" && exit 2 ; }
-  git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+  git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${UPSTREAM_REPO/https:\/\/github.com\//}"
+  git fetch ${FETCH_ARGS} origin
 else
   git clone $DOWNSTREAM_REPO work
   cd work || { echo "Missing work dir" && exit 2 ; }
   git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${DOWNSTREAM_REPO/https:\/\/github.com\//}"
+  git remote add upstream "$UPSTREAM_REPO"
+  git fetch ${FETCH_ARGS} upstream
+  target_remote=upstream
 fi
-
-
 
 git config user.name "${GITHUB_ACTOR}"
 git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
 git config --local user.password ${GITHUB_TOKEN}
 
-git remote add upstream "$UPSTREAM_REPO"
-git fetch ${FETCH_ARGS} upstream
 git remote -v
 
 git checkout ${DOWNSTREAM_BRANCH}
@@ -63,8 +60,9 @@ esac
 
 git push origin
 
-MERGE_RESULT=$(git merge ${MERGE_ARGS} upstream/${UPSTREAM_BRANCH})
+MERGE_RESULT=$(git merge ${MERGE_ARGS} ${target_remote}/${UPSTREAM_BRANCH})
 
+echo ${MERGE_RESULT}
 
 if [[ $MERGE_RESULT == "" ]] || [[ $MERGE_RESULT == *"merge failed"* ]]
 then
