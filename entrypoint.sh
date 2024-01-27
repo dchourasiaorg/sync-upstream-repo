@@ -47,6 +47,10 @@ git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
 git config --local user.password ${GITHUB_TOKEN}
 
 git remote -v
+ls -al
+echo $(dirname "$0")/get-latest-branch.sh
+ls -al /home/ci
+pwd
 if [[ $BRANCH_PREFIX != "" ]]
 then
   latest_branch=$($(dirname "$0")/get-latest-branch.sh $BRANCH_PREFIX)
