@@ -47,10 +47,9 @@ git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
 git config --local user.password ${GITHUB_TOKEN}
 
 git remote -v
-
 if [[ $BRANCH_PREFIX != "" ]]
 then
-  latest_branch=$(../get-latest-branch.sh $BRANCH_PREFIX)
+  latest_branch=$($(dirname "$0")/get-latest-branch.sh $BRANCH_PREFIX)
   if [[ $latest_branch == $DOWNSTREAM_BRANCH ]]
   then
     echo "PASS: The input $DOWNSTREAM_BRANCH branch is the latest version"
