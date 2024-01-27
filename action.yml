@@ -37,7 +37,10 @@ inputs:
     description: Toggle to spawn `sync-upstream-repo` with time logs
     required: true
     default: false
-
+  branch_prefix:
+    description: Check the branch is the latest version based on number(test-1.2 is newer than test-1.1)
+    required: false
+    default: ""
 runs:
   using: "docker"
   image: "Dockerfile"
@@ -51,6 +54,7 @@ runs:
     - ${{ inputs.push_args }}
     - ${{ inputs.spawn_logs }}
     - ${{ inputs.downstream_repo }}
+    - ${{ inputs.branch_prefix }}
 
 branding:
   icon: "git-merge"

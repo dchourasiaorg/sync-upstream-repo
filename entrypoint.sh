@@ -11,6 +11,7 @@ MERGE_ARGS=$6
 PUSH_ARGS=$7
 SPAWN_LOGS=$8
 DOWNSTREAM_REPO=$9
+BRANCH_PREFIX=${10}
 
 target_remote=origin
 
@@ -46,6 +47,19 @@ git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
 git config --local user.password ${GITHUB_TOKEN}
 
 git remote -v
+
+if [[ $BRANCH_PREFIX != "" ]]
+then
+  latest_branch=$(../get-latest-branch.sh $BRANCH_PREFIX)
+  if [[ $latest_branch == $DOWNSTREAM_BRANCH ]]
+  then
+    echo "PASS: The input $DOWNSTREAM_BRANCH branch is the latest version"
+  else
+    echo "FAIL: The input $DOWNSTREAM_BRANCH branch is NOT the latest version($latest_branch)"
+    rm -rf ../work
+    exit 1
+  fi
+fi  
 
 git checkout ${DOWNSTREAM_BRANCH}
 

@@ -25,7 +25,7 @@ env:
   # Optional, defaults to main
   UPSTREAM_BRANCH: "main"
   # Optional, defaults to current repo
-  DOWNSTREAM_URL: "https://github.com/dchourasia/sync-upstream-repo"
+  DOWNSTREAM_URL: "https://github.com/jooho/sync-upstream-repo"
   # Optional, defaults to UPSTREAM_BRANCH
   DOWNSTREAM_BRANCH: ""
   # Optional fetch arguments
@@ -36,6 +36,8 @@ env:
   PUSH_ARGS: ""
   # Optional toggle to spawn time logs (keeps action active) 
   SPAWN_LOGS: "false" # "true" or "false"
+  # Optional check if the downstream branch is the latest or not
+  BRANCH_PREFIX: ""
 
 # This runs every day on 1801 UTC
 on:
@@ -60,6 +62,7 @@ jobs:
           merge_args: ${{ env.MERGE_ARGS }}
           push_args: ${{ env.PUSH_ARGS }}
           spawn_logs: ${{ env.SPAWN_LOGS }}
+          branch_prefix: ${{ env.BRANCH_PREFIX }} 
 ```
 
 This action syncs your repo (merge changes from `remote`) at branch `main` with the upstream repo ``` https://github.com/dabreadman/go-web-proxy.git ``` every day on 1801 UTC.  
