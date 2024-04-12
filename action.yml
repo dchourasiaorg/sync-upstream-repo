@@ -1,6 +1,6 @@
-name: Sync repo to repo
+name: branch level sync
 description: Syncs and merges provided one repo with another repos. Fork of https://github.com/dabreadman/sync-upstream-repo.
-author: jooho
+author: dchouras
 
 inputs:
   upstream_repo:
